@@ -14,7 +14,8 @@
     "test": "ava 'dist/test/**/*.{spec,e2e}.js'",
     "lint": "npm run lint:typescript && npm run lint:javascript",
     "lint:typescript": "tslint {lib,test}/**/*.ts",
-    "lint:javascript": "eslint ./**/*.js"
+    "lint:javascript": "eslint ./**/*.js",
+    "start": "electron ./dist"
   },
   "keywords": [
     "arylo",
@@ -38,10 +39,17 @@
   "homepage": "https://github.com/Arylo/swscreem#readme",
   "license": "MIT",
   "yVersion": "2.1.25",
+  "dependencies": {
+    "bootstrap": "^3.4.1",
+    "electron": "^7.1.1",
+    "jquery": "^3.4.1"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
     "@commitlint/lint": "^8.0.0",
+    "@types/bootstrap": "^4.3.1",
+    "@types/jquery": "^3.3.31",
     "@types/node": "^12.0.4",
     "ava": "^1.4.1",
     "eslint": "^5.10.0",

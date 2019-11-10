@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<h1>单向屏控制DEMO</h1>
+<div class="row">
+    <div class="col-xs-4">
+        <button data-key="index" class="btn btn-default btn-block">
+            首页
+        </button>
+        <button data-key="1" class="btn btn-default btn-block">
+            第 1 章
+        </button>
+        <button data-id="2" class="btn btn-default btn-block">
+            第 2 章
+        </button>
+        <button data-key="3" class="btn btn-default btn-block">
+            第 3 章
+        </button>
+    </div>
+
+    <div class="col-xs-4 index-list" id="index-2">
+        <button data-key="2-1" class="btn btn-default btn-block">
+            第 1 部分
+        </button>
+        <button data-key="2-2" class="btn btn-default btn-block">
+            第 2 部分
+        </button>
+        <button data-key="2-3" class="btn btn-default btn-block">
+            第 3 部分
+        </button>
+    </div>
+
+</div>
+<script>
+const { ipcRenderer } = require('electron')
+const $ = require("jquery");
+
+$('.index-list').hide();
+
+$('button').click(function () {
+    const key = $(this).data('key');
+    const id = $(this).data('id');
+    if (key) {
+        ipcRenderer.send('jump', key);
+    }
+    $('.index-list').hide();
+    if (id) {
+        $(`#index-${id}`).show();
+        $(`#index-${id} button`).data('id', id);
+    }
+});
+</script>
+</body>
+</html>
