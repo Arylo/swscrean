@@ -41,7 +41,7 @@
   "yVersion": "2.1.25",
   "dependencies": {
     "bootstrap": "^3.4.1",
-    "electron": "^7.1.1",
+    "electron": "^9.4.0",
     "jquery": "^3.4.1"
   },
   "devDependencies": {
