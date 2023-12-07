@@ -1,0 +1,11 @@
+.hidden {
+    display: none;
+}
+.img {
+    width: 10px;
+    height: 10px;
+    border: #fff 1px solid;
+}
+.img + .img {
+    margin-left: 5px;
+}

@@ -1,0 +1,23 @@
+.gallery {
+    width: 100%;
+    position: relative;
+}
+
+.gallery > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    overflow-x: hidden;
+}
+
+.gallery :global(.image-container) {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+
+.gallery :global(.image-container) img {
+    width: 100%;
+}
