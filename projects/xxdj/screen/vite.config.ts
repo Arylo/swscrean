@@ -4,11 +4,6 @@ import lodash from 'lodash'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-const { name } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'))
-const utilsPath = path.resolve(__dirname, './src/hooks')
-const componentPath = path.resolve(__dirname, './src/components')
-const pagePath = path.resolve(__dirname, './src/pages')
-
 function getChunkName (id: string, configMap: Record<string, Array<string|RegExp>>) {
   for (const [name, matchConditions] of Object.entries(configMap)) {
     let isMapCondition = false
@@ -38,17 +33,13 @@ function getChunkName (id: string, configMap: Record<string, Array<string|RegExp
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: `/${name}`,
+  base: process.env.NODE_ENV === 'DEBUG' ? '/screen' : '/',
   build: {
     rollupOptions: {
       output: {
         manualChunks(id) {
           return getChunkName(id, {
-            'react-vendor': ['node_modules', /\/\breact(.*-dom)?\b\//],
-            'react-utils': ['node_modules', /\breact\b/],
             'vendor': ['node_modules'],
-            'pages/[name]': [path.resolve(pagePath, '*')],
-            'pages': [pagePath],
           })
         },
       },

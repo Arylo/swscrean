@@ -5,7 +5,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "turbo build"
+    "build": "turbo build",
+    "start:dev": "turbo start:dev",
+    "prersync": "npm run build",
+    "rsync": "rsync -rcEt -v --cache --exclude-from=.rsyncignore --del -P ."
   },
   "keywords": [],
   "author": "AryloYeung <arylo.open@gmail.com>",
