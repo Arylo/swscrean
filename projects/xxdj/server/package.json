@@ -1,9 +1,10 @@
 {
-  "name": "server",
+  "name": "@xxdj/server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p ./tsconfig.prod.json",
     "start:dev": "ENV=DEBUG ts-node src/index.ts"
   },
   "keywords": [],

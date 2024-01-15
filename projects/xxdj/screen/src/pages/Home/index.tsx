@@ -5,7 +5,6 @@ import { Router, Town } from '../Provider'
 import { RouteKey } from '../../constant'
 import PreloadImage from '../../components/PreloadImage'
 import { useImageAsset } from '../Provider/context/assets'
-import PrefetchAssets from './Preload'
 
 export default function Home () {
     const [index, setIndex] = useState(0)

@@ -1,9 +1,9 @@
 {
-  "name": "bianhaidangjian",
+  "name": "dangjian",
   "version": "1.2.0",
   "lastVersion": "",
-  "author": "'Imokh' <'1653706552@qq.com'>",
-  "description": "智在云天文化科技",
+  "author": "",
+  "description": "",
   "license": null,
   "main": "./dist/electron/main.js",
   "apiUpdate": "http://localhost:7001/api/update-electron",

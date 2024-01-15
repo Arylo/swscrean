@@ -5,13 +5,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "turbo build"
   },
   "keywords": [],
-  "author": "",
+  "author": "AryloYeung <arylo.open@gmail.com>",
   "license": "MIT",
   "workspaces": [
-    "client/*",
-    "server"
-  ]
+    "projects/*/*"
+  ],
+  "devDependencies": {
+    "turbo": "^1.11.3"
+  }
 }

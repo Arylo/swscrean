@@ -1,17 +1,23 @@
 {
-  "name": "controller",
+  "name": "@xxdj/screen",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start:dev": "vite --port 10081",
+    "start:dev": "vite --port 10080",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.12.2",
+    "axios": "^1.6.2",
+    "localforage": "^1.10.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-responsive-carousel": "^3.2.23",
+    "react-router-dom": "^6.20.0",
+    "react-use": "^17.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
