@@ -1,13 +1,10 @@
-import { PropsWithChildren, useEffect, useMemo } from "react"
-import { Asset, useQueryAssetList } from "../../hooks/useQueryAssetList"
+import { useMemo } from "react"
+import { Asset } from "../../hooks/useQueryAssetList"
 import { useImageAssets } from "../Provider/context/assets"
 import { btnMap } from "../Town/constant"
-import { usePreloadAssets } from "../../hooks"
+import Preload from "../../components/Preload"
 
-function Preload (props: PropsWithChildren<{ onFinish?: Function }>) {
-    const { isFetched } = useQueryAssetList()
-
-    const { assets: homeAssets } = useImageAssets('/home/')
+function PrefetchAssets () {
     const { assets: btnAssets } = useImageAssets('/btn')
     const { assets: titleAssets } = useImageAssets(/\/town\/\w+\.\w+$/)
     const { assets: contentAssets } = useImageAssets(/\/town\/\d+\//)
@@ -28,27 +25,15 @@ function Preload (props: PropsWithChildren<{ onFinish?: Function }>) {
     }, [contentAssets])
     const needPreloadAssets = useMemo(() => {
         return [
-            ...homeAssets,
             ...btnAssets,
             ...titleAssets,
             ...firstContentAssets,
         ]
-    }, [homeAssets, btnAssets, titleAssets, firstContentAssets])
-    const { isSuccess, refetch } = usePreloadAssets(needPreloadAssets)
-    useEffect(() => {
-        isFetched && refetch()
-    }, [isFetched])
-    useEffect(() => {
-        isSuccess && props.onFinish?.()
-    }, [isSuccess])
+    }, [btnAssets, titleAssets, firstContentAssets])
 
     return <>
-        {
-            !isFetched || !isSuccess
-            ? <div>Loading Asset List...</div>
-            : <></>
-        }
+        <Preload assets={needPreloadAssets} />
     </>
 }
 
-export default Preload
+export default PrefetchAssets

@@ -5,6 +5,7 @@ import { Router, Town } from '../Provider'
 import { RouteKey } from '../../constant'
 import PreloadImage from '../../components/PreloadImage'
 import { useImageAsset } from '../Provider/context/assets'
+import PrefetchAssets from './Preload'
 
 export default function Home () {
     const [index, setIndex] = useState(0)
@@ -41,7 +42,10 @@ export default function Home () {
             ['63%', '28%', '8%', '9%'],
         ],
     ]
-    const changeBg = (index: number) => setIndex(index)
+    const changeBg = (index: number) => {
+        console.log(index)
+        setIndex(index)
+    }
     const click = (index: number) => {
         changeBg(index)
         setTimeout(() => {

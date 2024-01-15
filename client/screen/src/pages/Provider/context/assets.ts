@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef } from "react";
+import { createContext, useContext, useEffect, useMemo } from "react";
 import { Asset, useQueryAssetList } from "../../../hooks/useQueryAssetList";
 
 interface AssetsContextContent {
@@ -53,9 +53,11 @@ export const useImageAssets = (likePath: string | RegExp = '') => {
 
 export const useImageAsset = (likePath = '') => {
     const { assets, urls, ...args } = useImageAssets(likePath)
+    const asset = useMemo(() => assets[0], [assets])
+    const url = useMemo(() => urls[0], [urls])
     return {
-        asset: assets[0],
-        url: urls[0],
+        asset,
+        url,
         ...args,
     }
 }

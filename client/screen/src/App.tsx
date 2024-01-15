@@ -1,27 +1,24 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { routeMap } from "./pages/route"
 import './App.css'
 import MainApp from "./pages/MainApp"
-import Preload from "./pages/Preload"
 import { Router } from "./pages/Provider"
-import If from "./components/If"
+import Preload from "./components/Preload"
+import { useImageAssets } from "./pages/Provider/context/assets"
 
 function App() {
-  const [isPreloadFinish, setPreloadFinish] = useState(false)
   const { key: routeKey, args: routeArgs } = Router.useValue()
+  const { assets: homeAssets } = useImageAssets('/home/')
   let Comp = routeMap[routeKey]
   useEffect(() => {
     Comp = routeMap[routeKey]
   }, [routeKey])
   return (<>
-    <If condition={isPreloadFinish}>
+    <Preload assets={homeAssets}>
       <MainApp>
         <Comp {...routeArgs} />
       </MainApp>
-    </If>
-    <If condition={!isPreloadFinish}>
-      <Preload onFinish={() => setPreloadFinish(true)} />
-    </If>
+    </Preload>
   </>)
 }
 
