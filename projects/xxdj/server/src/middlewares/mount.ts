@@ -10,17 +10,19 @@ import md5File from 'md5-file'
 interface MountMWOptions {
     prefix?: string,
     path: string,
+    indexJSON?: boolean,
 }
 
 export function Mount (opts: MountMWOptions) {
     const {
         prefix = '/',
         path: folderPath,
+        indexJSON = false,
     } = opts
     const etagMw = KoaEtag()
     const staticMw = KoaStatic(folderPath, { defer: true })
     const mw: Middleware = async (ctx, next) => {
-        if (yn(ctx.query.index)) {
+        if (indexJSON && yn(ctx.query.index)) {
             const list = glob.sync('**/*.*', { cwd: folderPath })
             ctx.body = list.map((p) => {
                 return {
