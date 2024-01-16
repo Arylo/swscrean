@@ -1,8 +1,8 @@
 import { accessAsyncLocalStorage } from '../common/access'
 
 function getCallAccessPrefix () {
-  const { sessionId, requestId } = accessAsyncLocalStorage.getStore() || {}
-  return `[${sessionId}][${requestId}]`
+  const { requestId } = accessAsyncLocalStorage.getStore() || {}
+  return requestId ? `[${requestId}]` : '[System]'
 }
 
 function getCallTimePrefix () {

@@ -8,7 +8,7 @@ export interface Asset {
 
 export const useQueryAssetList = (() => {
     const queryAssets = async () => {
-        const { data } = await axios.get('/static?index=1')
+        const { data } = await axios.get(`${__STATIC_URL_PREFIX__}?index=1`)
         return data as Asset[]
     }
     const queryKey = queryAssets.name

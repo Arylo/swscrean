@@ -3,6 +3,7 @@ import path from 'path'
 import lodash from 'lodash'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { SERVER_PORT, STATIC_URL_PREFIX } from '@xxdj/constant'
 
 function getChunkName (id: string, configMap: Record<string, Array<string|RegExp>>) {
   for (const [name, matchConditions] of Object.entries(configMap)) {
@@ -33,7 +34,19 @@ function getChunkName (id: string, configMap: Record<string, Array<string|RegExp
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: process.env.NODE_ENV === 'DEBUG' ? '/screen' : '/',
+  base: '/',
+  server: {
+    port: SERVER_PORT,
+    proxy: {
+      STATIC_URL_PREFIX: {
+        target: `http://127.0.0.1:${SERVER_PORT}`,
+        changeOrigin: true,
+      },
+    },
+  },
+  define: {
+    __STATIC_URL_PREFIX__: JSON.stringify(STATIC_URL_PREFIX),
+  },
   build: {
     rollupOptions: {
       output: {

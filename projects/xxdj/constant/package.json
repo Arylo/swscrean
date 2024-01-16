@@ -1,0 +1,13 @@
+{
+  "name": "@xxdj/constant",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p ./tsconfig.prod.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT"
+}
