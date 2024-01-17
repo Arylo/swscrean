@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
+import { Progress } from 'antd'
 import { useQueryAssetList } from '../../hooks/useQueryAssetList'
 import { preloadData } from '../../hooks/usePreloadAsset'
 import { RouteKey } from '../../constant'
@@ -7,7 +8,7 @@ import { Router } from '../Provider'
 
 export default function PreloadPage () {
   const go = Router.useGoPage()
-  const { data: assets, isFetched } = useQueryAssetList()
+  const { data: assets, isFetched, isSuccess } = useQueryAssetList()
   const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery({
     queryKey: ['preload', 'assets'],
     queryFn: async ({ pageParam }) => {
@@ -39,8 +40,19 @@ export default function PreloadPage () {
       }, 250)
     }
   }, [curCount])
+  const progressProps = React.useMemo(() => {
+    const defaultProps = {
+      percent: 0,
+      steps: 10,
+      size: [20, 30] as [number, number],
+      showInfo: true,
+      format: () => '正在加载资源...',
+    }
+    if (!isSuccess) return Object.assign(defaultProps, { percent: 10 })
+    const percent = parseInt((curCount / assets.length * 90 + 10).toString())
+    return Object.assign(defaultProps, { percent })
+  }, [isSuccess, curCount, assets])
   return <>
-    <p>successCount: { curCount }</p>
-    <p>totalCount: { assets.length }</p>
+    <Progress {...progressProps} />
   </>
 }
