@@ -4,48 +4,54 @@ import * as Town from "./context/town";
 import * as Assets from "./context/assets";
 import * as Pager from "./context/pager";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import ProviderList, { ProviderItem } from "./components/ProviderList";
 
 export {
-    Router,
-    Town,
-    Assets,
-    Pager,
+  Router,
+  Town,
+  Assets,
+  Pager,
 }
 
 const queryClient = new QueryClient()
 
-function ParentProvider (props: PropsWithChildren) {
-    return (<>
-        <QueryClientProvider client={queryClient}>
-            {props.children}
-        </QueryClientProvider>
-    </>)
+function CommonProvider (props: PropsWithChildren) {
+  const providers: ProviderItem[] = [
+    [QueryClientProvider, { client: queryClient }],
+  ]
+  return (<>
+    <ProviderList providers={providers}>
+      {props.children}
+      <ReactQueryDevtools initialIsOpen={false} />
+    </ProviderList>
+  </>)
 }
 
-function ChildrenProvider (props: PropsWithChildren) {
-    const [RouterProviderComp, RouterProviderValue] = Router.useProvider()
-    const [TownProviderComp, TownProviderValue] = Town.useProvider()
-    const [AssetsProviderComp, AssetsProviderValue] = Assets.useProvider()
-    const [PagerProviderComp, PagerProviderValue] = Pager.useProvider()
-    return (<>
-        <RouterProviderComp value={RouterProviderValue}>
-        <TownProviderComp value={TownProviderValue}>
-        <AssetsProviderComp value={AssetsProviderValue}>
-        <PagerProviderComp value={PagerProviderValue}>
-            {props.children}
-        </PagerProviderComp>
-        </AssetsProviderComp>
-        </TownProviderComp>
-        </RouterProviderComp>
-    </>)
+function LogicProvider (props: PropsWithChildren) {
+  const [AssetsProviderComp, AssetsProviderValue] = Assets.useProvider()
+  const [RouterProviderComp, RouterProviderValue] = Router.useProvider()
+  const [TownProviderComp, TownProviderValue] = Town.useProvider()
+  const [PagerProviderComp, PagerProviderValue] = Pager.useProvider()
+  const providers: ProviderItem[] = [
+    [AssetsProviderComp, { value: AssetsProviderValue }],
+    [RouterProviderComp, { value: RouterProviderValue }],
+    [TownProviderComp, { value: TownProviderValue }],
+    [PagerProviderComp, { value: PagerProviderValue }],
+  ]
+  return (<>
+    <ProviderList providers={providers}>
+      {props.children}
+    </ProviderList>
+  </>)
 }
 
 export default function Provider (props: PropsWithChildren) {
-    return (<>
-        <ParentProvider>
-        <ChildrenProvider>
-            {props.children}
-        </ChildrenProvider>
-        </ParentProvider>
-    </>)
+  return (<>
+    <CommonProvider>
+    <LogicProvider>
+      {props.children}
+    </LogicProvider>
+    </CommonProvider>
+  </>)
 }

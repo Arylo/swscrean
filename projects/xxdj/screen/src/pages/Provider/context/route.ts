@@ -7,10 +7,10 @@ interface RouterContextContent {
     go: (key: RouteKey, args?: object) => any,
 }
 
-const context = createContext<RouterContextContent>({ go: () => undefined, key: RouteKey.HOME, args: {} })
+const context = createContext<RouterContextContent>({ go: () => undefined, key: RouteKey.PRELOAD, args: {} })
 
 export const useProvider = () => {
-    const [key, setKey] = useState(RouteKey.HOME)
+    const [key, setKey] = useState(RouteKey.PRELOAD)
     const [args, setArgs] = useState({})
     const Comp = context.Provider
     const value = {

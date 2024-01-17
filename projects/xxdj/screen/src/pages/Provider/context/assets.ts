@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useMemo } from "react";
+import { createContext, useContext, useMemo } from "react";
+import { useEffectOnce } from "react-use"
 import { Asset, useQueryAssetList } from "../../../hooks/useQueryAssetList";
 
 interface AssetsContextContent {
@@ -21,7 +22,9 @@ export const useProvider = () => {
     const urls = useMemo(() => {
         return assets.map((d) => d.path)
     }, [assets])
-    useEffect(() => { !isFetching && refetch() }, [])
+    useEffectOnce(() => {
+      !isFetching && refetch()
+    })
     return [Comp, { assets, urls, isFetched }] as [typeof Comp, AssetsContextContent]
 }
 

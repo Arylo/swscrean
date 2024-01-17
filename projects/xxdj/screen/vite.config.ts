@@ -36,9 +36,9 @@ export default defineConfig({
   plugins: [react()],
   base: '/',
   server: {
-    port: SERVER_PORT,
+    host: '0.0.0.0',
     proxy: {
-      STATIC_URL_PREFIX: {
+      [STATIC_URL_PREFIX]: {
         target: `http://127.0.0.1:${SERVER_PORT}`,
         changeOrigin: true,
       },

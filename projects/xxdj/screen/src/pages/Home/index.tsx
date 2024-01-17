@@ -42,15 +42,14 @@ export default function Home () {
         ],
     ]
     const changeBg = (index: number) => {
-        console.log(index)
-        setIndex(index)
+      setIndex(index)
     }
     const click = (index: number) => {
-        changeBg(index)
-        setTimeout(() => {
-            go(RouteKey.TOWN)
-            clickBtn(0, index)
-        }, 100)
+      changeBg(index)
+      setTimeout(() => {
+        go(RouteKey.TOWN)
+        clickBtn(0, index)
+      }, 100)
     }
     return (<>
         <div className={css.zones}>
