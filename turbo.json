@@ -5,7 +5,15 @@
       "dependsOn": ["^build"],
       "outputs": ["dist"]
     },
+    "make": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist", "out"]
+    },
     "start:dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "start:web": {
       "cache": false,
       "persistent": true
     }

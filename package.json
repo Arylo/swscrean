@@ -6,7 +6,9 @@
   "main": "index.js",
   "scripts": {
     "build": "turbo build",
+    "start:web": "turbo start:web",
     "start:dev": "turbo start:dev",
+    "make": "turbo make",
     "prersync": "npm run build",
     "rsync": "rsync -rcEt -v --cache --exclude-from=.rsyncignore --del -P ."
   },

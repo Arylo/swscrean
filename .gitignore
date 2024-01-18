@@ -254,3 +254,4 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node,turbo,react,windows,linux,macos
 
 **/server/public/
+.vite
