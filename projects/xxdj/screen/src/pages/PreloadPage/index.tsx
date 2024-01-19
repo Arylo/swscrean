@@ -6,6 +6,30 @@ import { preloadData } from '../../hooks/usePreloadAsset'
 import { RouteKey } from '../../constant'
 import { Router } from '../Provider'
 
+type PercentConfig = {
+  percent: number,
+} & ({ status: boolean } | { current: number, total: number })
+
+function getPercent (configs: PercentConfig[]) {
+  let percent = 0
+  for (const config of configs) {
+    if ('status' in config) {
+      if (config.status) {
+        percent += config.percent
+      } else break
+    }
+    if ('current' in config) {
+      if (config.current === 0 || config.total === 0) break
+      percent += config.current / config.total * config.percent
+      if (config.current !== config.total) {
+        break
+      }
+    }
+  }
+  const totalPercent = configs.reduce((total, config) => total + config.percent, 0)
+  return percent / totalPercent * 100
+}
+
 export default function PreloadPage () {
   const go = Router.useGoPage()
   const { data: assets, isFetched, isSuccess } = useQueryAssetList()
@@ -41,16 +65,24 @@ export default function PreloadPage () {
     }
   }, [curCount])
   const progressProps = React.useMemo(() => {
-    const defaultProps = {
-      percent: 0,
+    const percentConfigs: PercentConfig[] = [
+      {
+        percent: 10,
+        status: isSuccess,
+      },
+      {
+        percent: 90,
+        current: curCount,
+        total: assets.length,
+      },
+    ]
+    return {
+      percent: getPercent(percentConfigs),
       steps: 10,
       size: [20, 30] as [number, number],
       showInfo: true,
       format: () => '正在加载资源...',
     }
-    if (!isSuccess) return Object.assign(defaultProps, { percent: 10 })
-    const percent = parseInt((curCount / assets.length * 90 + 10).toString())
-    return Object.assign(defaultProps, { percent })
   }, [isSuccess, curCount, assets])
   return <>
     <Progress {...progressProps} />
